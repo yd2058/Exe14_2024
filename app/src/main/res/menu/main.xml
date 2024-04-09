@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/cmsi"
+        android:title="Student Input" />
+    <item
+        android:id="@+id/cmsv"
+        android:title="Student View" />
+    <item
+        android:id="@+id/cmsfv"
+        android:title="Student Filtered View" />
+    <item
+        android:id="@+id/cmcr"
+        android:title="Credits" />
+</menu>
