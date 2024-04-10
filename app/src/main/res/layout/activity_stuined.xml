@@ -22,7 +22,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvid"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -37,7 +37,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:gravity="left|center_vertical"
-            android:inputType="numberDecimal" />
+            android:inputType="number" />
     </LinearLayout>
 
     <LinearLayout
@@ -49,7 +49,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tvfn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.15"
@@ -65,7 +65,7 @@
             android:inputType="text" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tvln"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.15"
@@ -86,11 +86,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:divider="@android:drawable/dark_header"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tvcls"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -138,11 +139,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:divider="@android:drawable/dark_header"
+        android:drawingCacheQuality="auto"
+        android:duplicateParentState="false"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/tvv1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -195,7 +199,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/tvv2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -252,7 +256,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Input Student" />
+            android:text="Input Student"
+            android:onClick="stuin"/>
     </LinearLayout>
 
     <Space
