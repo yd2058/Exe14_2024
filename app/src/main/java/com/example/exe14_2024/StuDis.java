@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,13 +13,35 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.exe14_2024.Helpers.StuViewList;
+
 public class StuDis extends AppCompatActivity implements View.OnCreateContextMenuListener{
+    ListView stulis;
+    StuViewList stuadp;
+
+    private String names[], ids[];
+    private int grades[], clss[];
+    private boolean canvacs[], vac1s[], vac2s[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stu_dis);
 
+        stulis = findViewById(R.id.stulis);
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        readstu();
+        stuadp = new StuViewList(this, names, ids, vac1s, vac2s, grades, clss, canvacs);
+        stulis.setAdapter(stuadp);
+    }
+
+    private void readstu() {
     }
 
     @Override

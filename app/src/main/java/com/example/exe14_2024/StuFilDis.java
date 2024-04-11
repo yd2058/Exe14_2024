@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,13 +13,33 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class StuFilDis extends AppCompatActivity implements View.OnCreateContextMenuListener{
+import com.example.exe14_2024.Helpers.StuViewList;
 
+public class StuFilDis extends AppCompatActivity implements View.OnCreateContextMenuListener{
+    ListView stulisfil;
+    StuViewList stuadpfil;
+
+    private String names[], ids[];
+    private int grades[], clss[];
+    private boolean canvacs[], vac1s[], vac2s[];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stu_fil_dis);
 
+        stulisfil = findViewById(R.id.stulisfil);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        readstu();
+        stuadpfil = new StuViewList(this, names, ids, vac1s, vac2s, grades, clss, canvacs);
+        stulisfil.setAdapter(stuadpfil);
+    }
+
+    private void readstu() {
     }
 
     @Override
