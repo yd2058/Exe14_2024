@@ -22,6 +22,7 @@ import com.example.exe14_2024.Helpers.Vaccine;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class StuInEd extends AppCompatActivity implements View.OnCreateContextMenuListener{
+    public static FirebaseDatabase FBDB = FirebaseDatabase.getInstance();
     TextView tvid, tvfn, tvln, tvv1, tvv2, tvcls;
     EditText stid, stfn, stln, clsnum, v1d, v1m, v1y, v1l, v2d, v2m, v2y, v2l;
     Spinner grspin;
@@ -112,6 +113,7 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
         if(grdslc<7||grdslc>12){takin = false;tvcls.setTextColor(0xffff0000);}//checks if there is a valid grade
         else{tvcls.setTextColor(0xff1B1B1F);}
         if(vacbtn.isChecked()) {
+            if(!(day1.isEmpty()&&month1.isEmpty()&&year1.isEmpty()&&v1l.getText().toString().isEmpty())){
             if ((!day1.matches("\\d+")) || day1.isEmpty() || Integer.parseInt(day1) < 1 || Integer.parseInt(day1) > 31) {
                 takin = false;
                 v1d.setHighlightColor((0xffff0000));
@@ -140,57 +142,80 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
             else {
                 v1l.setHighlightColor(0xff1B1B1F);
             }
-            if ((!day2.matches("\\d+")) || day2.isEmpty() || Integer.parseInt(day2) < 1 || Integer.parseInt(day2) > 31) {
-                takin = false;
-                v2d.setHighlightColor(0xffff0000);
-            }//checks if vaccine 2 is on a valid day
-            else {
-                v2d.setHighlightColor(0xff1B1B1F);
             }
-            if ((!month2.matches("\\d+")) || month2.isEmpty() || Integer.parseInt(month2) < 1 || Integer.parseInt(month2) > 12) {
-                takin = false;
-                v2m.setHighlightColor(0xffff0000);
-            }//checks if vaccine 2 is on a valid month
-            else {
-                v2m.setHighlightColor(0xff1B1B1F);
-            }
-            if ((!year2.matches("\\d+")) || year2.isEmpty()) {
-                takin = false;
-                v2y.setHighlightColor(0xffff0000);
-            }//checks if vaccine 2 is on a valid year
-            else {
-                v2y.setHighlightColor(0xff1B1B1F);
-            }
-            if (v2l.getText().toString().isEmpty()) {
-                takin = false;
-                v2l.setHighlightColor(0xffff0000);
-            }//checks if vaccine 2 has a location
-            else {
-                v2l.setHighlightColor(0xff1B1B1F);
-            }
-            if (isodmytoymd(Integer.parseInt(day2), Integer.parseInt(month2), Integer.parseInt(year2)) < isodmytoymd(Integer.parseInt(day1), Integer.parseInt(month1), Integer.parseInt(year1))) {
-                takin = false;
-                tvv2.setHighlightColor(0xffff0000);
-                Toast.makeText(this, "Invalid  spacing since vaccine 1", Toast.LENGTH_SHORT).show();
-            }//checks if vaccine 2 is on valid spacing from vaccine 1
-            else {
-                tvv2.setHighlightColor(0xff1B1B1F);
+            if(!(day2.isEmpty()&&month2.isEmpty()&&year2.isEmpty()&&v2l.getText().toString().isEmpty()))
+            {
+                if ((!day2.matches("\\d+")) || day2.isEmpty() || Integer.parseInt(day2) < 1 || Integer.parseInt(day2) > 31) {
+                    takin = false;
+                    v2d.setHighlightColor(0xffff0000);
+                }//checks if vaccine 2 is on a valid day
+                else {
+                    v2d.setHighlightColor(0xff1B1B1F);
+                }
+                if ((!month2.matches("\\d+")) || month2.isEmpty() || Integer.parseInt(month2) < 1 || Integer.parseInt(month2) > 12) {
+                    takin = false;
+                    v2m.setHighlightColor(0xffff0000);
+                }//checks if vaccine 2 is on a valid month
+                else {
+                    v2m.setHighlightColor(0xff1B1B1F);
+                }
+                if ((!year2.matches("\\d+")) || year2.isEmpty()) {
+                    takin = false;
+                    v2y.setHighlightColor(0xffff0000);
+                }//checks if vaccine 2 is on a valid year
+                else {
+                    v2y.setHighlightColor(0xff1B1B1F);
+                }
+                if (v2l.getText().toString().isEmpty()) {
+                    takin = false;
+                    v2l.setHighlightColor(0xffff0000);
+                }//checks if vaccine 2 has a location
+                else {
+                    v2l.setHighlightColor(0xff1B1B1F);
+                }
+                if (isodmytoymd(Integer.parseInt(day2), Integer.parseInt(month2), Integer.parseInt(year2)) < isodmytoymd(Integer.parseInt(day1), Integer.parseInt(month1), Integer.parseInt(year1))) {
+                    takin = false;
+                    tvv2.setHighlightColor(0xffff0000);
+                    Toast.makeText(this, "Invalid  spacing since vaccine 1", Toast.LENGTH_SHORT).show();
+                }//checks if vaccine 2 is on valid spacing from vaccine 1
+                else {
+                    tvv2.setHighlightColor(0xff1B1B1F);
+                }
             }
         }
 
         if(takin){
-            if(edit){}//edit previous
-            else{}//save new
+            writetoDB(edit);
         }
         else{
             Toast.makeText(this, "reddened values invalid", Toast.LENGTH_SHORT).show();
         }
     }
-    
+
+    private void writetoDB(Boolean edit) {
+        if (edit) {
+            //remove previous record
+        }
+        if (vacbtn.isChecked()) {
+            if (!day1.isEmpty()) {
+                tmpvac1 = new Vaccine(Integer.parseInt(day1), Integer.parseInt(month1), Integer.parseInt(year1), v1l.getText().toString());
+                if (!day2.isEmpty()) {
+                    tmpvac2 = new Vaccine(Integer.parseInt(day2), Integer.parseInt(month2), Integer.parseInt(year2), v2l.getText().toString());
+                }
+            } else {
+                tmpvac1 = null;
+                tmpvac2 = null;
+            }
+            tempst = new Student(stid.getText().toString(), stfn.getText().toString(), stln.getText().toString(), Integer.parseInt(clsnum.getText().toString()), grdslc, tmpvac1, tmpvac2, vacbtn.isChecked());
+            FBDB.getReference(tempst.getClss()+"").child(tempst.getGrade()+"").child(tempst.getId()).setValue(tempst);
+        }
+    }
+
     public int isodmytoymd(int convday, int convmonth, int convyear){
         int res;
         if(convmonth==13){convyear++;convmonth = 1;}
         res = convyear*10000+convmonth*100+convday;
         return res;
     }
+
 }

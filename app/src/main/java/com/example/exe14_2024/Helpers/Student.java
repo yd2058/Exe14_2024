@@ -4,7 +4,7 @@ public class Student {
     private String id, privateName, lastName;
     private int grade, clss;
     private Vaccine vac1, vac2;
-    private boolean canVaccinate;
+    private int vacs = 3;
 
     public Student(String id,String privateName, String lastName, int grade, int clss, Vaccine vac1, Vaccine vac2, boolean canVaccinate){
         this.id = id;
@@ -14,7 +14,15 @@ public class Student {
         this.clss = clss;
         this.vac1 = vac1;
         this.vac2 = vac2;
-        this.canVaccinate = canVaccinate;
+        if(canVaccinate){
+            vacs--;
+            if(vac1!=null){
+                vacs--;
+                if(vac2!=null){vacs--;}
+            }
+        }
+
+
     }
 
     public String getId() {
