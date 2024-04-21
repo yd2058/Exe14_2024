@@ -4,7 +4,7 @@ public class Student {
     private String id, privateName, lastName;
     private int grade, clss;
     private Vaccine vac1, vac2;
-    private int vacs = 3;
+    private int vacs = 3;//3 = unvaccinable, 2 = unvacced, 1 = vacced once, 0= vacced twice
 
     public Student(String id,String privateName, String lastName, int grade, int clss, Vaccine vac1, Vaccine vac2, boolean canVaccinate){
         this.id = id;
@@ -81,11 +81,14 @@ public class Student {
         this.vac2 = vac2;
     }
 
-    public boolean isCanVaccinate() {
-        return canVaccinate;
+
+
+
+    public int getVacs() {
+        return vacs;
     }
 
-    public void setCanVaccinate(boolean canVaccinate) {
-        this.canVaccinate = canVaccinate;
+    public void setVacs(int vacs) {
+        this.vacs = vacs;
     }
 }

@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Exe14_2024</string>
+
+    <string-array name="grades">
+        <item>Grade</item>
+        <item>7th</item>
+        <item>8th</item>
+        <item>9th</item>
+        <item>10th</item>
+        <item>11th</item>
+        <item>12th</item>
+    </string-array>
 </resources>

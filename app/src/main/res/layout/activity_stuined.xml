@@ -11,7 +11,8 @@
     <Space
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="0.5" />
+        android:layout_weight="0.5"
+        android:foregroundTint="#D3D3D3" />
 
     <LinearLayout
         android:id="@+id/idhll"
@@ -26,6 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:foregroundTint="#D3D3D3"
             android:gravity="right|center_vertical"
             android:text="Enter ID:"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
@@ -36,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:foregroundTint="#D3D3D3"
             android:gravity="left|center_vertical"
             android:inputType="number" />
     </LinearLayout>
@@ -53,6 +56,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.15"
+            android:foregroundTint="#D3D3D3"
             android:text="First Name:"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -62,6 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.35"
             android:ems="10"
+            android:foregroundTint="#D3D3D3"
             android:inputType="text" />
 
         <TextView
@@ -69,6 +74,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.15"
+            android:foregroundTint="#D3D3D3"
             android:text="Last Name:"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -78,6 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.35"
             android:ems="10"
+            android:foregroundTint="#D3D3D3"
             android:inputType="text" />
     </LinearLayout>
 
@@ -102,7 +109,9 @@
             android:id="@+id/grspin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:entries="@array/grades"
+            android:foregroundTint="#D3D3D3" />
 
         <EditText
             android:id="@+id/clsnum"
@@ -110,6 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:foregroundTint="#D3D3D3"
             android:hint="Class Num"
             android:inputType="number" />
 
@@ -125,10 +135,11 @@
 
         <ToggleButton
             android:id="@+id/vacbtn"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:autoText="false"
+            android:autoText="true"
+            android:foregroundTint="#D3D3D3"
             android:text="ToggleButton"
             android:textOff="cannot be vaccined"
             android:textOn="can be vaccined" />
@@ -150,6 +161,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:foregroundTint="#D3D3D3"
             android:text="Vaccine 1"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -159,6 +171,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:ems="10"
+            android:foregroundTint="#D3D3D3"
             android:hint="Day"
             android:inputType="number" />
 
@@ -168,6 +181,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
             android:ems="10"
+            android:foregroundTint="#D3D3D3"
             android:hint="Month"
             android:inputType="number" />
 
@@ -177,6 +191,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
             android:ems="10"
+            android:foregroundTint="#D3D3D3"
             android:hint="Year"
             android:inputType="number" />
 
@@ -186,6 +201,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:foregroundTint="#D3D3D3"
             android:hint="Location"
             android:inputType="text" />
     </LinearLayout>
@@ -203,6 +219,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:foregroundTint="#D3D3D3"
             android:text="Vaccine 2"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -212,6 +229,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:ems="10"
+            android:foregroundTint="#D3D3D3"
             android:hint="Day"
             android:inputType="number" />
 
@@ -221,6 +239,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
             android:ems="10"
+            android:foregroundTint="#D3D3D3"
             android:hint="Month"
             android:inputType="number" />
 
@@ -230,6 +249,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
             android:ems="10"
+            android:foregroundTint="#D3D3D3"
             android:hint="Year"
             android:inputType="number" />
 
@@ -239,6 +259,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:foregroundTint="#D3D3D3"
             android:hint="Location"
             android:inputType="text" />
     </LinearLayout>
@@ -248,20 +269,30 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/sbtn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Input Student"
-            android:onClick="stuin"/>
+            android:foregroundTint="#D3D3D3"
+            android:onClick="stuin"
+            android:text="Input Student" />
+
+        <Button
+            android:id="@+id/dbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:foregroundTint="#D3D3D3"
+            android:text="Delete Student" />
     </LinearLayout>
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5" />
+        android:layout_weight="0.5"
+        android:foregroundTint="#D3D3D3" />
 </LinearLayout>

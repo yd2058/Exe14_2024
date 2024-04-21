@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -21,22 +23,28 @@ import com.example.exe14_2024.Helpers.Student;
 import com.example.exe14_2024.Helpers.Vaccine;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class StuInEd extends AppCompatActivity implements View.OnCreateContextMenuListener{
+public class StuInEd extends AppCompatActivity implements View.OnCreateContextMenuListener, AdapterView.OnItemSelectedListener {
     public static FirebaseDatabase FBDB = FirebaseDatabase.getInstance();
     TextView tvid, tvfn, tvln, tvv1, tvv2, tvcls;
     EditText stid, stfn, stln, clsnum, v1d, v1m, v1y, v1l, v2d, v2m, v2y, v2l;
     Spinner grspin;
     ToggleButton vacbtn;
-    Button sbtn;
-    Boolean takin, edit = false;
+    Button sbtn, dbtn;
+    Boolean takin, edit;
     int grdslc=0;
     String day1, day2, month1, month2, year1, year2;
     Student tempst;
     Vaccine tmpvac1, tmpvac2;
+    Intent gi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stuined);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initiall();
     }
 
@@ -62,6 +70,30 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
         grspin = findViewById(R.id.grspin);
         vacbtn = findViewById(R.id.vacbtn);
         sbtn = findViewById(R.id.sbtn);
+        dbtn = findViewById(R.id.dbtn);
+        dbtn.setVisibility(View.GONE);
+
+
+
+        gi = getIntent();
+        edit = gi.getBooleanExtra("edit", false);
+        if(edit){tempst = gi.getParcelableExtra("student");
+        stid.setText(tempst.getId());
+        stfn.setText(tempst.getPrivateName());
+        stln.setText(tempst.getLastName());
+        grdslc = tempst.getGrade();
+        clsnum.setText(tempst.getClss());
+        switch (tempst.getVacs()){
+            case 0 :if(!vacbtn.isChecked()){vacbtn.toggle();}v1d.setText(tempst.getVac1().getDay());v1m.setText(tempst.getVac1().getMonth());v1y.setText(tempst.getVac1().getYear());v1l.setText(tempst.getVac1().getLocation());v2d.setText(tempst.getVac2().getDay());v2m.setText(tempst.getVac2().getMonth());v2y.setText(tempst.getVac2().getYear());v2l.setText(tempst.getVac2().getLocation());break;
+            case 1 :if(!vacbtn.isChecked()){vacbtn.toggle();}v1d.setText(tempst.getVac1().getDay());v1m.setText(tempst.getVac1().getMonth());v1y.setText(tempst.getVac1().getYear());v1l.setText(tempst.getVac1().getLocation());break;
+            case 2 :if(!vacbtn.isChecked()){vacbtn.toggle();} break;
+            case 3 :if(vacbtn.isChecked()){vacbtn.toggle();}
+
+        }
+
+
+        }
+
     }
 
     @Override
@@ -110,7 +142,7 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
         else{tvln.setTextColor(0xff1B1B1F);}
         if(clsnum.getText().toString().isEmpty()){takin = false;tvcls.setTextColor(0xffff0000);}//checks if there is a class num
         else{tvcls.setTextColor(0xff1B1B1F);}
-        if(grdslc<7||grdslc>12){takin = false;tvcls.setTextColor(0xffff0000);}//checks if there is a valid grade
+        if(grdslc<=7||grdslc>=12){takin = false;tvcls.setTextColor(0xffff0000);}//checks if there is a valid grade
         else{tvcls.setTextColor(0xff1B1B1F);}
         if(vacbtn.isChecked()) {
             if(!(day1.isEmpty()&&month1.isEmpty()&&year1.isEmpty()&&v1l.getText().toString().isEmpty())){
@@ -194,7 +226,7 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
 
     private void writetoDB(Boolean edit) {
         if (edit) {
-            //remove previous record
+            FBDB.getReference(tempst.getClss()+"").child(tempst.getGrade()+"").child(tempst.getId()).removeValue();
         }
         if (vacbtn.isChecked()) {
             if (!day1.isEmpty()) {
@@ -218,4 +250,13 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
         return res;
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        grdslc = i+6;
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }
