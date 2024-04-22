@@ -14,14 +14,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.exe14_2024.Helpers.StuViewList;
+import com.example.exe14_2024.Helpers.Student;
 
 public class StuDis extends AppCompatActivity implements View.OnCreateContextMenuListener{
     ListView stulis;
     StuViewList stuadp;
 
-    private String names[], ids[];
-    private int grades[], clss[];
-    private boolean canvacs[], vac1s[], vac2s[];
+    private Student[] students;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class StuDis extends AppCompatActivity implements View.OnCreateContextMen
     protected void onResume() {
         super.onResume();
         readstu();
-        stuadp = new StuViewList(this, names, ids, vac1s, vac2s, grades, clss, canvacs);
+        stuadp = new StuViewList(this, students);
         stulis.setAdapter(stuadp);
     }
 

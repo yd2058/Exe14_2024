@@ -12,30 +12,22 @@ import com.example.exe14_2024.R;
 
 public class StuViewList extends BaseAdapter {
     private Context context;
-    private String names[], ids[];
-    private int grades[], clss[];
-    private boolean canvacs[], vac1s[], vac2s[];
+    private Student[] students;
     private LayoutInflater inflater;
 
-    public StuViewList(Context context, String[] name, String[] id, boolean[] vac1, boolean[] vac2, int[] grade, int[] cls, boolean[] canvac){
+    public StuViewList(Context context, Student[] studentss){
         this.context = context;
-        this.names = name;
-        this.ids = id;
-        this.vac1s = vac1;
-        this.vac2s = vac2;
-        this.grades = grade;
-        this.clss = cls;
-        this.canvacs = canvac;
+        this.students = studentss;
         inflater = (LayoutInflater.from(context));
     }
     @Override
     public int getCount(){
-        return names.length;
+        return students.length;
     }
 
     @Override
     public Object getItem(int pos){
-        return ids[pos];
+        return students[pos];
     }
 
     @Override
@@ -52,26 +44,17 @@ public class StuViewList extends BaseAdapter {
         TextView cgrdlis = view.findViewById(R.id.cgrdlis);
         TextView cv1lis = view.findViewById(R.id.cv1lis);
         TextView cv2lis = view.findViewById(R.id.cv2lis);
-        cnamelis.setText(names[i]);
-        cidslis.setText(ids[i]);
-        cclslis.setText(clss[i]);
-        cgrdlis.setText(grades[i]);
-        if(!canvacs[i]){
-            cv1lis.setText("Cannot Be");
-            cv1lis.setTextColor(0xffff0000);
-            cv1lis.setGravity(View.FOCUS_LEFT);
-            cv2lis.setText("Vaccinated");
-            cv2lis.setTextColor(0xffff0000);
-            cv2lis.setGravity(View.FOCUS_RIGHT);
+        cnamelis.setText(students[i].getPrivateName()+" "+students[i].getLastName());
+        cidslis.setText(students[i].getId());
+        cclslis.setText(students[i].getClss());
+        cgrdlis.setText(students[i].getGrade());
+        switch(students[i].getVacs()){
+            case 0: cv1lis.setText("Cannot Be");cv1lis.setBackgroundColor(0xffff0000);cv1lis.setGravity(View.FOCUS_LEFT);cv2lis.setText("Vaccinated");cv2lis.setBackgroundColor(0xffff0000);cv2lis.setGravity(View.FOCUS_RIGHT);break;
+            case 1: cv1lis.setText("Missing");cv1lis.setBackgroundColor(0xffff0000);cv1lis.setGravity(View.FOCUS_LEFT);cv2lis.setText("Missing");cv2lis.setBackgroundColor(0xffff0000);cv2lis.setGravity(View.FOCUS_RIGHT);break;
+            case 2: cv1lis.setText("Done");cv1lis.setBackgroundColor(0xffff0000);cv1lis.setGravity(View.FOCUS_LEFT);cv2lis.setText("Missing");cv2lis.setBackgroundColor(0xff50C878);cv2lis.setGravity(View.FOCUS_RIGHT);break;
+            case 3: cv1lis.setText("Done");cv1lis.setBackgroundColor(0xff50C878);cv1lis.setGravity(View.FOCUS_LEFT);cv2lis.setText("Done");cv2lis.setBackgroundColor(0xff50C878);cv2lis.setGravity(View.FOCUS_RIGHT);break;
         }
-        else{
-            cv1lis.setText(vac1s[i]+"");
-            cv1lis.setTextColor(0xff1B1B1F);
-            cv1lis.setGravity(View.TEXT_ALIGNMENT_CENTER);
-            cv2lis.setText(vac2s[i]+"");
-            cv2lis.setTextColor(0xff1B1B1F);
-            cv2lis.setGravity(View.TEXT_ALIGNMENT_CENTER);
-        }
+
 
         return view;
     }

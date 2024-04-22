@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +38,8 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
     Student tempst;
     Vaccine tmpvac1, tmpvac2;
     Intent gi;
+    Space sspc;
+    LinearLayout imhll, v1hll, v2hll;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,27 +75,37 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
         vacbtn = findViewById(R.id.vacbtn);
         sbtn = findViewById(R.id.sbtn);
         dbtn = findViewById(R.id.dbtn);
+        sspc = findViewById(R.id.sspc);
+        imhll = findViewById(R.id.imhll);
+        v1hll = findViewById(R.id.v1hll);
+        v2hll = findViewById(R.id.v2hll);
+        if(!vacbtn.isChecked()){vacbtn.toggle();}
+
+
+
         dbtn.setVisibility(View.GONE);
-
-
+        sspc.setVisibility(View.GONE);
 
         gi = getIntent();
         edit = gi.getBooleanExtra("edit", false);
-        if(edit){tempst = gi.getParcelableExtra("student");
-        stid.setText(tempst.getId());
-        stfn.setText(tempst.getPrivateName());
-        stln.setText(tempst.getLastName());
-        grdslc = tempst.getGrade();
-        clsnum.setText(tempst.getClss());
-        switch (tempst.getVacs()){
-            case 0 :if(!vacbtn.isChecked()){vacbtn.toggle();}v1d.setText(tempst.getVac1().getDay());v1m.setText(tempst.getVac1().getMonth());v1y.setText(tempst.getVac1().getYear());v1l.setText(tempst.getVac1().getLocation());v2d.setText(tempst.getVac2().getDay());v2m.setText(tempst.getVac2().getMonth());v2y.setText(tempst.getVac2().getYear());v2l.setText(tempst.getVac2().getLocation());break;
-            case 1 :if(!vacbtn.isChecked()){vacbtn.toggle();}v1d.setText(tempst.getVac1().getDay());v1m.setText(tempst.getVac1().getMonth());v1y.setText(tempst.getVac1().getYear());v1l.setText(tempst.getVac1().getLocation());break;
-            case 2 :if(!vacbtn.isChecked()){vacbtn.toggle();} break;
-            case 3 :if(vacbtn.isChecked()){vacbtn.toggle();}
-
-        }
-
-
+        if(edit){
+            tempst = gi.getParcelableExtra("student");
+            stid.setText(tempst.getId());
+            stfn.setText(tempst.getPrivateName());
+            stln.setText(tempst.getLastName());
+            grdslc = tempst.getGrade();
+            clsnum.setText(tempst.getClss());
+            imhll.setForeground(getDrawable(R.drawable.foreground));
+            vacbtn.setClickable(false);
+            switch (tempst.getVacs()){
+                case 0 :v1d.setEnabled(false);v1m.setEnabled(false);v1y.setEnabled(false);v1l.setEnabled(false);v2d.setEnabled(false);v2m.setEnabled(false);v2y.setEnabled(false);v2l.setEnabled(false);if(!vacbtn.isChecked()){vacbtn.toggle();}v1hll.setForeground(getDrawable(R.drawable.foreground));v2hll.setForeground(getDrawable(R.drawable.foreground));v1d.setText(tempst.getVac1().getDay());v1m.setText(tempst.getVac1().getMonth());v1y.setText(tempst.getVac1().getYear());v1l.setText(tempst.getVac1().getLocation());v2d.setText(tempst.getVac2().getDay());v2m.setText(tempst.getVac2().getMonth());v2y.setText(tempst.getVac2().getYear());v2l.setText(tempst.getVac2().getLocation());break;//done 2 vaccines
+                case 1 :v1d.setEnabled(false);v1m.setEnabled(false);v1y.setEnabled(false);v1l.setEnabled(false);if(!vacbtn.isChecked()){vacbtn.toggle();}v1hll.setForeground(getDrawable(R.drawable.foreground));v1d.setText(tempst.getVac1().getDay());v1m.setText(tempst.getVac1().getMonth());v1y.setText(tempst.getVac1().getYear());v1l.setText(tempst.getVac1().getLocation());break;//1 vaccine done
+                case 2 :if(!vacbtn.isChecked()){vacbtn.toggle();}break;// can vaccinate but didn't yet
+                case 3 :v1d.setEnabled(false);v1m.setEnabled(false);v1y.setEnabled(false);v1l.setEnabled(false);v2d.setEnabled(false);v2m.setEnabled(false);v2y.setEnabled(false);v2l.setEnabled(false);if(vacbtn.isChecked()){vacbtn.toggle();}v1hll.setForeground(getDrawable(R.drawable.foreground));v2hll.setForeground(getDrawable(R.drawable.foreground)); break;//cannot vaccinate
+            }
+            sbtn.setText("Update Record");
+            dbtn.setVisibility(View.VISIBLE);
+            sspc.setVisibility(View.VISIBLE);
         }
 
     }
@@ -241,6 +255,7 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
             tempst = new Student(stid.getText().toString(), stfn.getText().toString(), stln.getText().toString(), Integer.parseInt(clsnum.getText().toString()), grdslc, tmpvac1, tmpvac2, vacbtn.isChecked());
             FBDB.getReference(tempst.getClss()+"").child(tempst.getGrade()+"").child(tempst.getId()).setValue(tempst);
         }
+        if(edit)finish();
     }
 
     public int isodmytoymd(int convday, int convmonth, int convyear){
