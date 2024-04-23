@@ -1,5 +1,7 @@
 package com.example.exe14_2024;
 
+import static com.example.exe14_2024.Helpers.FBhelp.fbref;
+import static com.example.exe14_2024.Helpers.FBhelp.tmpstrnsf;
 import static com.google.android.material.R.color.design_default_color_secondary;
 import static java.lang.Integer.parseInt;
 
@@ -26,20 +28,21 @@ import com.example.exe14_2024.Helpers.Vaccine;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class StuInEd extends AppCompatActivity implements View.OnCreateContextMenuListener, AdapterView.OnItemSelectedListener {
-    public static FirebaseDatabase FBDB = FirebaseDatabase.getInstance();
+
     TextView tvid, tvfn, tvln, tvv1, tvv2, tvcls;
     EditText stid, stfn, stln, clsnum, v1d, v1m, v1y, v1l, v2d, v2m, v2y, v2l;
     Spinner grspin;
     ToggleButton vacbtn;
     Button sbtn, dbtn;
     Boolean takin, edit;
-    int grdslc;
-    String day1, day2, month1, month2, year1, year2;
+    int grdslc, tmpgrd, tmpcls;
+    String day1, day2, month1, month2, year1, year2, tmpid;
     Student tempst;
     Vaccine tmpvac1, tmpvac2;
     Intent gi;
     Space sspc;
     LinearLayout imhll, v1hll, v2hll;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,8 +91,12 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
 
         gi = getIntent();
         edit = gi.getBooleanExtra("edit", false);
-        if(edit){
-            tempst = gi.getParcelableExtra("student");
+        tmpgrd =gi.getIntExtra("grade",0);
+        tmpcls = gi.getIntExtra("class",0);
+        tmpid = gi.getStringExtra("id");
+        if(edit&&tmpgrd!=0&&tmpcls!=0&&!tmpid.isEmpty()){
+
+            tempst = tmpstrnsf;
             stid.setText(tempst.getId());
             stfn.setText(tempst.getPrivateName());
             stln.setText(tempst.getLastName());
@@ -240,7 +247,7 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
 
     private void writetoDB(Boolean edit) {
         if (edit) {
-            FBDB.getReference(tempst.getClss()+"").child(tempst.getGrade()+"").child(tempst.getId()).removeValue();
+            fbref.child(tempst.getClss()+"").child(tempst.getGrade()+"").child(tempst.getId()).removeValue();
         }
         if (vacbtn.isChecked()) {
             if (!day1.isEmpty()) {
@@ -253,7 +260,7 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
                 tmpvac2 = null;
             }
             tempst = new Student(stid.getText().toString(), stfn.getText().toString(), stln.getText().toString(), Integer.parseInt(clsnum.getText().toString()), grdslc, tmpvac1, tmpvac2, vacbtn.isChecked());
-            FBDB.getReference(tempst.getClss()+"").child(tempst.getGrade()+"").child(tempst.getId()).setValue(tempst);
+            fbref.child(tempst.getClss()+"").child(tempst.getGrade()+"").child(tempst.getId()).setValue(tempst);
         }
         Toast.makeText(this, "Data Successfully input", Toast.LENGTH_SHORT).show();
         if(edit)finish();
@@ -289,6 +296,8 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
     }
 
     public void deletest(View view) {
-        FBDB.getReference(tempst.getClss()+"").child(tempst.getGrade()+"").child(tempst.getId()).removeValue();
+        fbref.child(tempst.getClss()+"").child(tempst.getGrade()+"").child(tempst.getId()).removeValue();
+        Toast.makeText(this, "Data Successfully Deleted", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

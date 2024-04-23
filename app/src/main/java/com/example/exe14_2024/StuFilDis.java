@@ -16,11 +16,13 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.exe14_2024.Helpers.StuViewList;
 import com.example.exe14_2024.Helpers.Student;
 
+import java.util.ArrayList;
+
 public class StuFilDis extends AppCompatActivity implements View.OnCreateContextMenuListener{
     ListView stulisfil;
     StuViewList stuadpfil;
 
-    private Student[] students;
+    private ArrayList<Student> students;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
