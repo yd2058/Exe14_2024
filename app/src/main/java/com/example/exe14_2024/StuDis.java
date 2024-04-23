@@ -56,7 +56,7 @@ public class StuDis extends AppCompatActivity implements View.OnCreateContextMen
         stuadp = new StuViewList(this, students);
         Log.i("adp","after adp creation");
         stulis.setAdapter(stuadp);
-        Log.i("adp","after adp connection");
+        stulis.setOnItemClickListener(this);
     }
 
     @Override
@@ -79,7 +79,6 @@ public class StuDis extends AppCompatActivity implements View.OnCreateContextMen
                             tmpst.setVac1(kid.child("vac1").getValue(Vaccine.class));
                             tmpst.setVac2(kid.child("vac2").getValue(Vaccine.class));
                             students.add(tmpst);
-                            Log.i("readstu", "onDataChange: "+tmpst.getVac1().getDay()+" "+tmpst.getId());
                         }
                     }
                 }
