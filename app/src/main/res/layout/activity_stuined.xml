@@ -298,7 +298,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:foregroundTint="#D3D3D3"
-            android:text="Delete Student" />
+            android:text="Delete Student"
+            android:onClick="deletest"/>
 
         <Space
             android:layout_width="0dp"

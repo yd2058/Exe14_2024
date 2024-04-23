@@ -33,7 +33,7 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
     ToggleButton vacbtn;
     Button sbtn, dbtn;
     Boolean takin, edit;
-    int grdslc=0;
+    int grdslc;
     String day1, day2, month1, month2, year1, year2;
     Student tempst;
     Vaccine tmpvac1, tmpvac2;
@@ -81,7 +81,7 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
         v2hll = findViewById(R.id.v2hll);
         if(!vacbtn.isChecked()){vacbtn.toggle();}
 
-
+        grspin.setOnItemSelectedListener(this);
 
         dbtn.setVisibility(View.GONE);
         sspc.setVisibility(View.GONE);
@@ -154,9 +154,9 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
         else{tvfn.setTextColor(0xff1B1B1F);}
         if(stln.getText().toString().isEmpty()){takin = false;tvln.setTextColor(0xffff0000);}//checks if there is a last name
         else{tvln.setTextColor(0xff1B1B1F);}
-        if(clsnum.getText().toString().isEmpty()){takin = false;tvcls.setTextColor(0xffff0000);}//checks if there is a class num
+        if(clsnum.getText().toString().isEmpty()){takin = false;tvcls.setTextColor(0xffff0000);Log.i("class","class" );}//checks if there is a class num
         else{tvcls.setTextColor(0xff1B1B1F);}
-        if(grdslc<=7||grdslc>=12){takin = false;tvcls.setTextColor(0xffff0000);}//checks if there is a valid grade
+        if(grdslc<7||grdslc>12){takin = false;tvcls.setTextColor(0xffff0000);Log.i("grade", String.valueOf(grdslc));}//checks if there is a valid grade
         else{tvcls.setTextColor(0xff1B1B1F);}
         if(vacbtn.isChecked()) {
             if(!(day1.isEmpty()&&month1.isEmpty()&&year1.isEmpty()&&v1l.getText().toString().isEmpty())){
@@ -255,7 +255,20 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
             tempst = new Student(stid.getText().toString(), stfn.getText().toString(), stln.getText().toString(), Integer.parseInt(clsnum.getText().toString()), grdslc, tmpvac1, tmpvac2, vacbtn.isChecked());
             FBDB.getReference(tempst.getClss()+"").child(tempst.getGrade()+"").child(tempst.getId()).setValue(tempst);
         }
+        Toast.makeText(this, "Data Successfully input", Toast.LENGTH_SHORT).show();
         if(edit)finish();
+        stid.setText("");
+        stfn.setText("");
+        stln.setText("");
+        clsnum.setText("");
+        v1d.setText("");
+        v1m.setText("");
+        v1y.setText("");
+        v1l.setText("");
+        v2d.setText("");
+        v2m.setText("");
+        v2y.setText("");
+        v2l.setText("");
     }
 
     public int isodmytoymd(int convday, int convmonth, int convyear){
@@ -273,5 +286,9 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    public void deletest(View view) {
+        FBDB.getReference(tempst.getClss()+"").child(tempst.getGrade()+"").child(tempst.getId()).removeValue();
     }
 }

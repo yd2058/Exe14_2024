@@ -41,6 +41,7 @@ public class StuDis extends AppCompatActivity implements View.OnCreateContextMen
     }
 
     private void readstu() {
+
     }
 
     @Override

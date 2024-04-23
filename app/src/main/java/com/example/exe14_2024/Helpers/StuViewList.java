@@ -44,7 +44,7 @@ public class StuViewList extends BaseAdapter {
         TextView cgrdlis = view.findViewById(R.id.cgrdlis);
         TextView cv1lis = view.findViewById(R.id.cv1lis);
         TextView cv2lis = view.findViewById(R.id.cv2lis);
-        cnamelis.setText(students[i].getPrivateName()+" "+students[i].getLastName());
+        cnamelis.setText(students[i].getLastName()+" "+students[i].getPrivateName());
         cidslis.setText(students[i].getId());
         cclslis.setText(students[i].getClss());
         cgrdlis.setText(students[i].getGrade());
