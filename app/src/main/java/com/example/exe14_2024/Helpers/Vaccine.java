@@ -41,4 +41,6 @@ public class Vaccine {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public Vaccine (){}
 }

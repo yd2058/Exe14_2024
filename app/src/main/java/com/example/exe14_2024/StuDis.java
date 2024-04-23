@@ -1,9 +1,11 @@
 package com.example.exe14_2024;
 
+import static com.example.exe14_2024.Helpers.FBhelp.fbref;
 import static com.example.exe14_2024.Helpers.FBhelp.tmpstrnsf;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +22,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.exe14_2024.Helpers.StuViewList;
 import com.example.exe14_2024.Helpers.Student;
+import com.example.exe14_2024.Helpers.Vaccine;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,12 +30,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class StuDis extends AppCompatActivity implements View.OnCreateContextMenuListener, AdapterView.OnItemSelectedListener {
+public class StuDis extends AppCompatActivity implements View.OnCreateContextMenuListener, AdapterView.OnItemClickListener {
     ListView stulis;
     StuViewList stuadp;
-    final public FirebaseDatabase FBDB = FirebaseDatabase.getInstance();
     private ArrayList<Student> students;
     ValueEventListener stulisten;
+    Student tmpst;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class StuDis extends AppCompatActivity implements View.OnCreateContextMen
         setContentView(R.layout.activity_stu_dis);
 
         stulis = findViewById(R.id.stulis);
+        students = new ArrayList<>();
 
 
     }
@@ -48,15 +52,18 @@ public class StuDis extends AppCompatActivity implements View.OnCreateContextMen
     protected void onResume() {
         super.onResume();
         readstu();
+        Log.i("read","after read");
         stuadp = new StuViewList(this, students);
+        Log.i("adp","after adp creation");
         stulis.setAdapter(stuadp);
+        Log.i("adp","after adp connection");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         if(stulisten!=null){
-            FBDB.getReference().removeEventListener(stulisten);
+            fbref.removeEventListener(stulisten);
         }
     }
 
@@ -68,10 +75,17 @@ public class StuDis extends AppCompatActivity implements View.OnCreateContextMen
                 for(DataSnapshot grades : dS.getChildren()) {
                     for(DataSnapshot classes : grades.getChildren()){
                         for(DataSnapshot kid: classes.getChildren()){
-                            students.add(kid.getValue(Student.class));
+                            tmpst = kid.getValue(Student.class);
+                            tmpst.setVac1(kid.child("vac1").getValue(Vaccine.class));
+                            tmpst.setVac2(kid.child("vac2").getValue(Vaccine.class));
+                            students.add(tmpst);
+                            Log.i("readstu", "onDataChange: "+tmpst.getVac1().getDay()+" "+tmpst.getId());
                         }
                     }
                 }
+                Log.wtf("wtf","before update");
+                stuadp.notifyDataSetChanged();
+                Log.wtf("wtf","after update");
             }
 
             @Override
@@ -79,7 +93,9 @@ public class StuDis extends AppCompatActivity implements View.OnCreateContextMen
                 Toast.makeText(StuDis.this, "An error has occurred, please make sure you are connected to the internet", Toast.LENGTH_SHORT).show();
             }
         };
-        FBDB.getReference().addValueEventListener(stulisten);
+        Log.wtf("wtf","before listen");
+        fbref.addValueEventListener(stulisten);
+        Log.wtf("wtf","after listen");
     }
 
     @Override
@@ -114,15 +130,12 @@ public class StuDis extends AppCompatActivity implements View.OnCreateContextMen
 
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent si = new Intent(this, StuInEd.class);
         si.putExtra("edit", true);
         tmpstrnsf = students.get(i);
         startActivity(si);
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
 
-    }
 }

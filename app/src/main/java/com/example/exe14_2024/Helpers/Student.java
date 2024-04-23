@@ -91,4 +91,6 @@ public class Student {
     public void setVacs(int vacs) {
         this.vacs = vacs;
     }
+
+    public Student(){}
 }

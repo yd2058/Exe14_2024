@@ -22,14 +22,14 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <TextView
-        android:id="@+id/cgrdlis"
+        android:id="@+id/cclslis"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="19"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <TextView
-        android:id="@+id/cclslis"
+        android:id="@+id/cgrdlis"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="11"

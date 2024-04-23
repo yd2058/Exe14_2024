@@ -27,7 +27,7 @@ public class StuViewList extends BaseAdapter {
     }
     @Override
     public int getCount(){
-        return students.toArray().length;
+        return students.size();
     }
 
     @Override
@@ -52,13 +52,13 @@ public class StuViewList extends BaseAdapter {
         LinearLayout stulisll = view.findViewById(R.id.stulisll);
         cnamelis.setText(students.get(i).getLastName()+" "+students.get(i).getPrivateName());
         cidslis.setText(students.get(i).getId());
-        cclslis.setText(students.get(i).getClss());
-        cgrdlis.setText(students.get(i).getGrade());
+        cclslis.setText(students.get(i).getClss()+"");
+        cgrdlis.setText(students.get(i).getGrade()+"");
         switch(students.get(i).getVacs()){
-            case 0: cv1lis.setText("Cannot Be");cv1lis.setBackgroundColor(0xffff0000);cv1lis.setGravity(View.FOCUS_LEFT);cv2lis.setText("Vaccinated");cv2lis.setBackgroundColor(0xffff0000);cv2lis.setGravity(View.FOCUS_RIGHT);break;
-            case 1: cv1lis.setText("Missing");cv1lis.setBackgroundColor(0xffff0000);cv1lis.setGravity(View.FOCUS_LEFT);cv2lis.setText("Missing");cv2lis.setBackgroundColor(0xffff0000);cv2lis.setGravity(View.FOCUS_RIGHT);break;
-            case 2: cv1lis.setText("Done");cv1lis.setBackgroundColor(0xffff0000);cv1lis.setGravity(View.FOCUS_LEFT);cv2lis.setText("Missing");cv2lis.setBackgroundColor(0xff50C878);cv2lis.setGravity(View.FOCUS_RIGHT);break;
-            case 3: cv1lis.setText("Done");cv1lis.setBackgroundColor(0xff50C878);cv1lis.setGravity(View.FOCUS_LEFT);cv2lis.setText("Done");cv2lis.setBackgroundColor(0xff50C878);cv2lis.setGravity(View.FOCUS_RIGHT);break;
+            case 3: cv1lis.setText("Cannot Be");cv1lis.setBackgroundColor(0xffff0000);cv1lis.setGravity(View.FOCUS_LEFT);cv2lis.setText("Vaccinated");cv2lis.setBackgroundColor(0xffff0000);cv2lis.setGravity(View.FOCUS_RIGHT);break;
+            case 2: cv1lis.setText("Missing");cv1lis.setBackgroundColor(0xffff0000);cv1lis.setGravity(View.FOCUS_LEFT);cv2lis.setText("Missing");cv2lis.setBackgroundColor(0xffff0000);cv2lis.setGravity(View.FOCUS_RIGHT);break;
+            case 1: cv1lis.setText("Done");cv1lis.setBackgroundColor(0xffff0000);cv1lis.setGravity(View.FOCUS_LEFT);cv2lis.setText("Missing");cv2lis.setBackgroundColor(0xff50C878);cv2lis.setGravity(View.FOCUS_RIGHT);break;
+            case 0: cv1lis.setText("Done");cv1lis.setBackgroundColor(0xff50C878);cv1lis.setGravity(View.FOCUS_LEFT);cv2lis.setText("Done");cv2lis.setBackgroundColor(0xff50C878);cv2lis.setGravity(View.FOCUS_RIGHT);break;
         }
         if(i%2==1){stulisll.setBackgroundColor(0x4DBEBEBE);}else{stulisll.setBackgroundColor(0x00BEBEBE);}
         return view;
