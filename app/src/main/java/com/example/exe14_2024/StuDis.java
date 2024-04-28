@@ -52,6 +52,7 @@ public class StuDis extends AppCompatActivity implements View.OnCreateContextMen
     protected void onResume() {
         super.onResume();
         readstu();
+        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show();
         Log.i("read","after read");
         stuadp = new StuViewList(this, students);
         Log.i("adp","after adp creation");
