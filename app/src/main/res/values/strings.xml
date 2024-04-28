@@ -10,4 +10,11 @@
         <item>11th</item>
         <item>12th</item>
     </string-array>
+
+    <string-array name="filters">
+        <item>School</item>
+        <item>Grade</item>
+        <item>Class</item>
+        <item>Cannot Be Vaccinated</item>
+    </string-array>
 </resources>

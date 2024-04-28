@@ -141,6 +141,11 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
             Intent si = new Intent(this, StuFilDis.class);
             startActivity(si);
         }
+        else if (id ==R.id.cmsi) {
+            clearpg();
+            Intent si = new Intent(this, StuInEd.class);
+            startActivity(si);
+        }
         return true;
     }
 
@@ -261,18 +266,7 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
 
         Toast.makeText(this, "Data Successfully input", Toast.LENGTH_SHORT).show();
         if(edit)finish();
-        stid.setText("");
-        stfn.setText("");
-        stln.setText("");
-        clsnum.setText("");
-        v1d.setText("");
-        v1m.setText("");
-        v1y.setText("");
-        v1l.setText("");
-        v2d.setText("");
-        v2m.setText("");
-        v2y.setText("");
-        v2l.setText("");
+        clearpg();
     }
 
     public int isodmytoymd(int convday, int convmonth, int convyear){
@@ -296,5 +290,19 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
         fbref.child(tempst.getClss()+"").child(tempst.getGrade()+"").child(tempst.getId()).removeValue();
         Toast.makeText(this, "Data Successfully Deleted", Toast.LENGTH_SHORT).show();
         finish();
+    }
+    private void clearpg(){
+        stid.setText("");
+        stfn.setText("");
+        stln.setText("");
+        clsnum.setText("");
+        v1d.setText("");
+        v1m.setText("");
+        v1y.setText("");
+        v1l.setText("");
+        v2d.setText("");
+        v2m.setText("");
+        v2y.setText("");
+        v2l.setText("");
     }
 }
