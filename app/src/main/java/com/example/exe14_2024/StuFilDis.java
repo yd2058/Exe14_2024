@@ -32,6 +32,7 @@ import com.example.exe14_2024.Helpers.Vaccine;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -109,16 +110,33 @@ public class StuFilDis extends AppCompatActivity implements View.OnCreateContext
      */
 
     public void readcls(DataSnapshot ds, boolean unvacableonly){
+        Query query = ds.getRef().orderByChild("lastName");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot kid : snapshot.getChildren()) {
+                    tmpst = kid.getValue(Student.class);
+                    tmpst.setVac1(kid.child("vac1").getValue(Vaccine.class));
+                    tmpst.setVac2(kid.child("vac2").getValue(Vaccine.class));
+                    if (unvacableonly) {
+                        if (tmpst.getVacs() == 3) students.add(tmpst);
+                    } else {
+                        students.add(tmpst);
+                    }
+                }
+            }
 
-        for(DataSnapshot kid: ds.getChildren()){
-            tmpst = kid.getValue(Student.class);
-            tmpst.setVac1(kid.child("vac1").getValue(Vaccine.class));
-            tmpst.setVac2(kid.child("vac2").getValue(Vaccine.class));
-            if(unvacableonly){if (tmpst.getVacs()==3)students.add(tmpst);}
-            else{students.add(tmpst);}
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
 
         }
-    }
+
     /**
      * reads a whole grade in the school.
      * <p>
@@ -212,4 +230,5 @@ public class StuFilDis extends AppCompatActivity implements View.OnCreateContext
         startActivity(si);
 
     }
+
 }
