@@ -1,4 +1,10 @@
 package com.example.exe14_2024;
+/**
+ * @author		Yiftah David yd2058@bs.amalnet.k12.il
+ * @version	1.0
+ * @since		9/4/2024
+ * activity used to input/edit/delete students to and from the database
+ */
 
 import static com.example.exe14_2024.Helpers.FBhelp.fbref;
 import static com.example.exe14_2024.Helpers.FBhelp.tmpstrnsf;
@@ -34,7 +40,7 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
     Spinner grspin;
     ToggleButton vacbtn;
     Button sbtn, dbtn;
-    Boolean takin, edit, flg;
+    Boolean takin, edit;
     int grdslc;
     String day1, day2, month1, month2, year1, year2;
     Student tempst;
@@ -54,6 +60,12 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
         super.onResume();
         initiall();
     }
+    /**
+     * initiates all screen parts.
+     * <p>
+     *
+     *
+     */
 
     private void initiall() {
         tvid = findViewById(R.id.tvid);
@@ -142,6 +154,12 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
         }
         return true;
     }
+    /**
+     * reacts to write button and checks if all values are valid.
+     * <p>
+     *
+     * @param	view Description	refers to view pressed.
+     */
 
     public void stuin(View view) {
         takin = true;
@@ -240,6 +258,12 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
             Toast.makeText(this, "reddened values invalid", Toast.LENGTH_SHORT).show();
         }
     }
+    /**
+     * writes to database
+     * <p>
+     *
+     * @param	edit Description	refers to whether the write is in order to edit or write new students
+     */
 
     private void writetoDB(Boolean edit) {
         if (edit) {
@@ -261,6 +285,15 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
         clearpg();
         if(edit)finish();
     }
+    /**
+     * recieves day, month and year to convert to number.
+     * <p>
+     *
+     * @param	convday Description	refers to day.
+     * @param	convmonth Description	refers to month.
+     * @param	convyear Description	refers to year.
+     * @return	Description			returns date in number-form.
+     */
 
     public int isodmytoymd(int convday, int convmonth, int convyear){
         int res;
@@ -268,6 +301,15 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
         res = convyear*10000+convmonth*100+convday;
         return res;
     }
+    /**
+     * reacts to selection of grade in spinner.
+     * <p>
+     *
+     * @param	adapterView Description	refers to which spinner was used.
+     * @param	view Description	refers t which cell within the spinner was selected.
+     * @param	i Description	refers to position in list selected.
+     * @param	l Description	refers to cell id.
+     */
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -278,12 +320,24 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+    /**
+     * deletes student record.
+     * <p>
+     *
+     * @param	view Description	refers to element clicked.
+     */
 
     public void deletest(View view) {
         fbref.child(tempst.getClss()+"").child(tempst.getGrade()+"").child(tempst.getId()).removeValue();
         Toast.makeText(this, "Data Successfully Deleted", Toast.LENGTH_SHORT).show();
         finish();
     }
+    /**
+     * clears all page visual elements that are editable.
+     * <p>
+     *
+     */
+
     private void clearpg(){
         stid.setText("");
         stfn.setText("");
@@ -298,6 +352,12 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
         v2y.setText("");
         v2l.setText("");
     }
+    /**
+     * reacts to change of vaccinability.
+     * <p>
+     *
+     * @param	view Description	refers to view element clicked.
+     */
 
     public void togvac(View view) {
         if(vacbtn.isChecked()){

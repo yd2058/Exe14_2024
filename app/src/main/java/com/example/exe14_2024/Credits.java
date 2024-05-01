@@ -1,5 +1,10 @@
 package com.example.exe14_2024;
-
+/**
+ * @author		Yiftah David yd2058@bs.amalnet.k12.il
+ * @version	1.0
+ * @since		9/4/2024
+ * activity used to credit the creators of the app
+ */
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;

@@ -1,5 +1,10 @@
 package com.example.exe14_2024;
-
+/**
+ * @author		Yiftah David yd2058@bs.amalnet.k12.il
+ * @version	1.0
+ * @since		9/4/2024
+ * activity used to see students in the database with filtering abilities
+ */
 import static com.example.exe14_2024.Helpers.FBhelp.fbref;
 import static com.example.exe14_2024.Helpers.FBhelp.tmpstrnsf;
 
@@ -64,10 +69,7 @@ public class StuFilDis extends AppCompatActivity implements View.OnCreateContext
         grade.setOnItemSelectedListener(this);
     }
 
-    private void readstu() {
 
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -98,8 +100,16 @@ public class StuFilDis extends AppCompatActivity implements View.OnCreateContext
         }
         return true;
     }
+    /**
+     * reads a whole class in the school.
+     * <p>
+     *
+     * @param	ds refers to current class being read.
+     * @param unvacableonly refers to whether to return only students that cannot be vaccinated.
+     */
 
     public void readcls(DataSnapshot ds, boolean unvacableonly){
+
         for(DataSnapshot kid: ds.getChildren()){
             tmpst = kid.getValue(Student.class);
             tmpst.setVac1(kid.child("vac1").getValue(Vaccine.class));
@@ -109,12 +119,33 @@ public class StuFilDis extends AppCompatActivity implements View.OnCreateContext
 
         }
     }
-
+    /**
+     * reads a whole grade in the school.
+     * <p>
+     *
+     * @param	ds refers to current class being read.
+     * @param unvacableonly refers to whether to return only students that cannot be vaccinated.
+     */
     public void readgrd(DataSnapshot ds, boolean unvacableonly){
         for (DataSnapshot cls: ds.getChildren()){readcls(cls, unvacableonly);}
     }
+    /**
+     * reads a whole school.
+     * <p>
+     *
+     * @param	ds refers to current class being read.
+     * @param unvacableonly refers to whether to return only students that cannot be vaccinated.
+     */
     public void readschool(DataSnapshot ds, boolean unvacableonly){for(DataSnapshot grd: ds.getChildren()){readgrd(grd,unvacableonly);}}
-
+    /**
+     * reacts to selection of grade in spinner.
+     * <p>
+     *
+     * @param	adapterView Description	refers to which spinner was used.
+     * @param	view Description	refers t which cell within the spinner was selected.
+     * @param	i Description	refers to position in list selected.
+     * @param	l Description	refers to cell id.
+     */
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -135,7 +166,12 @@ public class StuFilDis extends AppCompatActivity implements View.OnCreateContext
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
-
+    /**
+     * applies reading filter.
+     * <p>
+     *
+     * @param	view Description	refers to view element clicked.
+     */
     public void search(View view) {
         Log.i("search", "search");
         fbref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -158,7 +194,15 @@ public class StuFilDis extends AppCompatActivity implements View.OnCreateContext
             }
         });
     }
-
+    /**
+     * reacts to selection of student from listview to edit/delete.
+     * <p>
+     *
+     * @param	adapterView Description	refers to which spinner was used.
+     * @param	view Description	refers t which cell within the spinner was selected.
+     * @param	i Description	refers to position in list selected.
+     * @param	l Description	refers to cell id.
+     */
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 

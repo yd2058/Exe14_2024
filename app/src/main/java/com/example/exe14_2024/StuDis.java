@@ -1,5 +1,10 @@
 package com.example.exe14_2024;
-
+/**
+ * @author		Yiftah David yd2058@bs.amalnet.k12.il
+ * @version	1.0
+ * @since		9/4/2024
+ * activity used to see students in the database
+ */
 import static com.example.exe14_2024.Helpers.FBhelp.fbref;
 import static com.example.exe14_2024.Helpers.FBhelp.tmpstrnsf;
 
@@ -67,7 +72,12 @@ public class StuDis extends AppCompatActivity implements View.OnCreateContextMen
             fbref.removeEventListener(stulisten);
         }
     }
-
+    /**
+     * reads a whole school from database.
+     * <p>
+     *
+     *
+     */
     private void readstu() {
         stulisten = new ValueEventListener() {
             @Override
@@ -128,7 +138,15 @@ public class StuDis extends AppCompatActivity implements View.OnCreateContextMen
         return true;
     }
 
-
+    /**
+     * reacts to selection of student from listview to edit/delete.
+     * <p>
+     *
+     * @param	adapterView Description	refers to which spinner was used.
+     * @param	view Description	refers t which cell within the spinner was selected.
+     * @param	i Description	refers to position in list selected.
+     * @param	l Description	refers to cell id.
+     */
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent si = new Intent(this, StuInEd.class);

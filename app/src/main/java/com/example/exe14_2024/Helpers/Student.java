@@ -1,5 +1,10 @@
 package com.example.exe14_2024.Helpers;
-
+/**
+ * @author		Yiftah David yd2058@bs.amalnet.k12.il
+ * @version	1.1
+ * @since		10/4/2024
+ * activity used to mange students
+ */
 public class Student {
     private String id, privateName, lastName;
     private int grade, clss;
