@@ -142,7 +142,8 @@
             android:foregroundTint="#D3D3D3"
             android:text="ToggleButton"
             android:textOff="cannot be vaccined"
-            android:textOn="can be vaccined" />
+            android:textOn="can be vaccined"
+            android:onClick="togvac"/>
     </LinearLayout>
 
     <LinearLayout

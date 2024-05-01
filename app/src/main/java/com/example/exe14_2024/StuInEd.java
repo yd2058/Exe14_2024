@@ -34,7 +34,7 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
     Spinner grspin;
     ToggleButton vacbtn;
     Button sbtn, dbtn;
-    Boolean takin, edit;
+    Boolean takin, edit, flg;
     int grdslc;
     String day1, day2, month1, month2, year1, year2;
     Student tempst;
@@ -99,14 +99,8 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
             stln.setText(tempst.getLastName());
             grdslc = tempst.getGrade();
             clsnum.setText(tempst.getClss()+"");
-            imhll.setForeground(getDrawable(R.drawable.foreground));
-            vacbtn.setClickable(false);
-            switch (tempst.getVacs()){
-                case 0 :v1d.setEnabled(false);v1m.setEnabled(false);v1y.setEnabled(false);v1l.setEnabled(false);v2d.setEnabled(false);v2m.setEnabled(false);v2y.setEnabled(false);v2l.setEnabled(false);v1hll.setForeground(getDrawable(R.drawable.foreground));v2hll.setForeground(getDrawable(R.drawable.foreground));v1d.setText(tempst.getVac1().getDay()+"");v1m.setText(tempst.getVac1().getMonth()+"");v1y.setText(tempst.getVac1().getYear()+"");v1l.setText(tempst.getVac1().getLocation());v2d.setText(tempst.getVac2().getDay()+"");v2m.setText(tempst.getVac2().getMonth()+"");v2y.setText(tempst.getVac2().getYear()+"");v2l.setText(tempst.getVac2().getLocation());break;//done 2 vaccines
-                case 1 :v1d.setEnabled(false);v1m.setEnabled(false);v1y.setEnabled(false);v1l.setEnabled(false);v1hll.setForeground(getDrawable(R.drawable.foreground));v1d.setText(tempst.getVac1().getDay()+"");v1m.setText(tempst.getVac1().getMonth()+"");v1y.setText(tempst.getVac1().getYear()+"");v1l.setText(tempst.getVac1().getLocation());break;//1 vaccine done
-                case 2 :break;// can vaccinate but didn't yet
-                case 3 :v1d.setEnabled(false);v1m.setEnabled(false);v1y.setEnabled(false);v1l.setEnabled(false);v2d.setEnabled(false);v2m.setEnabled(false);v2y.setEnabled(false);v2l.setEnabled(false);vacbtn.toggle();v1hll.setForeground(getDrawable(R.drawable.foreground));v2hll.setForeground(getDrawable(R.drawable.foreground)); break;//cannot vaccinate
-            }
+            if(tempst.getCanVaccinate()){vacbtn.toggle();}
+            togvac(vacbtn);
             sbtn.setText("Update Record");
             dbtn.setVisibility(View.VISIBLE);
             sspc.setVisibility(View.VISIBLE);
@@ -254,9 +248,8 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
         if (vacbtn.isChecked()) {
             if (!day1.isEmpty()) {
                 tmpvac1 = new Vaccine(Integer.parseInt(day1), Integer.parseInt(month1), Integer.parseInt(year1), v1l.getText().toString());
-                if (!day2.isEmpty()) {
-                    tmpvac2 = new Vaccine(Integer.parseInt(day2), Integer.parseInt(month2), Integer.parseInt(year2), v2l.getText().toString());
-                }
+                if (!day2.isEmpty()) {tmpvac2 = new Vaccine(Integer.parseInt(day2), Integer.parseInt(month2), Integer.parseInt(year2), v2l.getText().toString());}
+                else{tmpvac2 = null;}
             } else {
                 tmpvac1 = null;
                 tmpvac2 = null;
@@ -265,8 +258,8 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
         fbref.child(tempst.getGrade()+"").child(tempst.getClss()+"").child(tempst.getId()).setValue(tempst);
 
         Toast.makeText(this, "Data Successfully input", Toast.LENGTH_SHORT).show();
-        if(edit)finish();
         clearpg();
+        if(edit)finish();
     }
 
     public int isodmytoymd(int convday, int convmonth, int convyear){
@@ -304,5 +297,14 @@ public class StuInEd extends AppCompatActivity implements View.OnCreateContextMe
         v2m.setText("");
         v2y.setText("");
         v2l.setText("");
+    }
+
+    public void togvac(View view) {
+        if(vacbtn.isChecked()){
+            v1d.setEnabled(true);v2d.setEnabled(true);v1m.setEnabled(true);v2m.setEnabled(true);v1y.setEnabled(true);v2y.setEnabled(true);v1l.setEnabled(true);v2l.setEnabled(true);v1hll.setForeground(null);v2hll.setForeground(null);
+        }
+        else{
+            v1d.setEnabled(false);v2d.setEnabled(false);v1m.setEnabled(false);v2m.setEnabled(false);v1y.setEnabled(false);v2y.setEnabled(false);v1l.setEnabled(false);v2l.setEnabled(false);v1hll.setForeground(getDrawable(R.drawable.foreground));v2hll.setForeground(getDrawable(R.drawable.foreground));
+        }
     }
 }
